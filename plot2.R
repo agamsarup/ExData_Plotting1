@@ -1,0 +1,10 @@
+##df<-read.table("../household_power_consumption.txt",sep = ";",skip=66637,stringsAsFactors = F)
+
+df<-read.table("../household_power_consumption.txt",header = T, sep = ";",stringsAsFactors = F)
+df[,1]<-as.Date(df[,1],"%d/%m/%Y")
+dfs<-subset(df,Date<="2007-2-2" & Date>="2007-2-1")
+par(mfrow = c(1, 1))
+dates<-as.POSIXct(paste(dfs$Date, dfs$Time), format="%Y-%m-%d %H:%M:%S")
+plot(dates,as.numeric(dfs[,3]),xlab="",ylab = "Global Active Power (kilowatts)",type="l")
+dev.copy(png,file="plot2.png")
+dev.off()
